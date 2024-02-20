@@ -14,7 +14,7 @@ library(ggrepel)
 
 
 # Load series and platform data from GEO
-gset = read.table("data/GSE36961_non-normalized.txt", header = TRUE, sep = "\t")
+gset = read_excel("data/GSE36961_non-normalized.xlsx")
 gset = gset[,c(1, seq(2,290,2))]
 gset = gset[complete.cases(gset),]
 
@@ -65,7 +65,7 @@ before=ggplot(long_df, aes(x = miRNA_Group, y = Expression, fill = Group)) +
   scale_fill_manual(values = c("Control" = "#1B9E77", "HCM" = "#7570B3"))+
   theme(legend.text=element_text(size=10), legend.title=element_blank())+
   scale_x_discrete(breaks=long_df$miRNA_Group,
-                   labels=long_df$miRNA)
+                   labels=long_df$miRNA) + theme(legend.text=element_text(size=28))
 
 
 # Normalize expression data
@@ -149,10 +149,10 @@ after=ggplot(long_df, aes(x = miRNA_Group, y = Expression, fill = Group)) +
   scale_fill_manual(values = c("Control" = "#1B9E77", "HCM" = "#7570B3"))+
   theme(legend.text=element_text(size=10), legend.title=element_blank())+
   scale_x_discrete(breaks=long_df$miRNA_Group,
-                   labels=long_df$miRNA)
+                   labels=long_df$miRNA)+ theme(legend.text=element_text(size=28))
 
 
-p = before / after
+p1 = before / after
 
 p = p+ plot_annotation(tag_levels = 'A')
 
@@ -189,9 +189,9 @@ p1 <- EnhancedVolcano(tT,
                       FCcutoff = logFC_cutoff,
                       pointSize = c(ifelse(tT$adj.P.Val < adjPVal_cutoff & abs(tT$logFC) > logFC_cutoff, 4, 2)),
                       colCustom = keyvals.colour1,
-                      legendLabSize = 8,
-                      legendIconSize = 4,
-                      axisLabSize = 10,
+                      legendLabSize = 12,
+                      legendIconSize = 8,
+                      axisLabSize = 14,
                       legendPosition = 'bottom')
 
 # Mean-Difference Plot of Expression Data

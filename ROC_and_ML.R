@@ -22,7 +22,7 @@ exprs2 <- cbind.data.frame(exprs[(colnames(exprs) %in% degs_gse36946_data$ID)], 
 head(exprs2)
 
 # ROC Curve Analysis
-layout(matrix(c(1,2,0,3), 2, 2, byrow = TRUE))
+layout(matrix(c(1,2,3,0), 2, 2, byrow = TRUE))
 roc_ILMN_3167552 <- plot(roc(exprs2$group, exprs2$ILMN_3167552), print.auc = FALSE, col = "blue")
 roc_ILMN_3167552 <- plot(roc(exprs2$group, exprs2$ILMN_3168643), print.auc = FALSE, col = "darkgreen", print.auc.y = .45, add = TRUE)
 roc_ILMN_3168756 <- plot(roc(exprs2$group, exprs2$ILMN_3168756), print.auc = FALSE, col = "red", print.auc.y = .4, add = TRUE)
@@ -31,15 +31,15 @@ roc_ILMN_3168464 <- plot(roc(exprs2$group, exprs2$ILMN_3168464), print.auc = FAL
 
 auc_ILMN_3167552 <- roc(exprs2$group, exprs2$ILMN_3167552)
 ci_ILMN_3167552<- ci(auc_ILMN_3167552)
-text(x = 0.3, y = 0.25, labels = paste0("hsa-miR-10a: ", round(auc(auc_ILMN_3167552), 3)," [", round(ci_ILMN_3167552[1], 3), "-", round(ci_ILMN_3167552[3], 3), "]"), col="blue")
+text(x = 0.3, y = 0.25, labels = paste0("hsa-miR-10a-3p: ", round(auc(auc_ILMN_3167552), 3)," [", round(ci_ILMN_3167552[1], 3), "-", round(ci_ILMN_3167552[3], 3), "]"), col="blue")
 
 auc_ILMN_3168643 <- roc(exprs2$group, exprs2$ILMN_3168643)
 ci_ILMN_3168643<- ci(auc_ILMN_3168643)
-text(x = 0.3, y = 0.20, labels = paste0("hsa-miR-10a*: ", round(auc(auc_ILMN_3168643), 3)," [", round(ci_ILMN_3168643[1], 3), "-", round(ci_ILMN_3168643[3], 3), "]"), col="darkgreen")
+text(x = 0.3, y = 0.20, labels = paste0("hsa-miR-10a-5p: ", round(auc(auc_ILMN_3168643), 3)," [", round(ci_ILMN_3168643[1], 3), "-", round(ci_ILMN_3168643[3], 3), "]"), col="darkgreen")
 
 auc_ILMN_3168756 <- roc(exprs2$group, exprs2$ILMN_3168756)
 ci_ILMN_3168756<- ci(auc_ILMN_3168756)
-text(x = 0.3, y = 0.15, labels = paste0("hsa-miR-144*: ", round(auc(auc_ILMN_3168756), 3)," [", round(ci_ILMN_3168756[1], 3), "-", round(ci_ILMN_3168756[3], 3), "]"), col="red")
+text(x = 0.3, y = 0.15, labels = paste0("hsa-miR-144-5p: ", round(auc(auc_ILMN_3168756), 3)," [", round(ci_ILMN_3168756[1], 3), "-", round(ci_ILMN_3168756[3], 3), "]"), col="red")
 
 auc_ILMN_3167463 <- roc(exprs2$group, exprs2$ILMN_3167463)
 ci_ILMN_3167463<- ci(auc_ILMN_3167463)
@@ -154,11 +154,11 @@ confusionMatrix(table(predictions_rf_class, test_data[,ncol(test_data)]), positi
 
 p1 = plot_confusion_matrix(svm_matrix$`Confusion Matrix`[[1]],
                       rm_zero_percentages = FALSE,
-                      rm_zero_text = FALSE) 
+                      rm_zero_text = FALSE) +theme(text = element_text(size=18))
 
 p2 = plot_confusion_matrix(rf_matrix$`Confusion Matrix`[[1]],
                            rm_zero_percentages = FALSE,
-                           rm_zero_text = FALSE) 
+                           rm_zero_text = FALSE) +theme(text = element_text(size=18))
 
 
 ### Model 2 ####
@@ -216,17 +216,17 @@ confusionMatrix(table(predictions_rf_class, test_data[,ncol(test_data)]), positi
 
 p3 = plot_confusion_matrix(svm_matrix$`Confusion Matrix`[[1]],
                            rm_zero_percentages = FALSE,
-                           rm_zero_text = FALSE) 
+                           rm_zero_text = FALSE) +theme(text = element_text(size=18))
 
 p4 = plot_confusion_matrix(rf_matrix$`Confusion Matrix`[[1]],
                            rm_zero_percentages = FALSE,
-                           rm_zero_text = FALSE) 
+                           rm_zero_text = FALSE) +theme(text = element_text(size=18))
 
 
 
 p = (p1|p2) / (p3|p4)
-p = p+ plot_annotation(tag_levels = 'A')
+p = p+ plot_annotation(tag_levels = 'A') & theme(plot.tag = element_text(size = '18'))
 
-ggsave('~/Documents/Studies/LVH_DeepLearning/Figures/confusion_matrix.png', p, width = 12, height = 8)
+ggsave('~/Documents/Studies/LVH_DeepLearning/JMCC/Figures/Figure8.png', p, width = 12, height = 8)
 
 

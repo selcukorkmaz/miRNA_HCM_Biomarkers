@@ -70,7 +70,7 @@ before=ggplot(long_df, aes(x = miRNA_Group, y = Expression, fill = Group)) +
   scale_fill_manual(values = c("Control" = "#1B9E77", "HCM" = "#7570B3"))+
   theme(legend.text=element_text(size=10), legend.title=element_blank())+
   scale_x_discrete(breaks=long_df$miRNA_Group,
-                   labels=long_df$miRNA)
+                   labels=long_df$miRNA)+ theme(legend.text=element_text(size=28))
 
 # Normalize expression data
 gset_exp_norm <- normalizeBetweenArrays(gset_exp) # normalize data
@@ -166,10 +166,10 @@ after =ggplot(long_df, aes(x = miRNA_Group, y = Expression, fill = Group)) +
   scale_fill_manual(values = c("Control" = "#1B9E77", "HCM" = "#7570B3"))+
   theme(legend.text=element_text(size=10), legend.title=element_blank())+
   scale_x_discrete(breaks=long_df$miRNA_Group,
-                   labels=long_df$miRNA)
+                   labels=long_df$miRNA)+ theme(legend.text=element_text(size=28))
 
 
-p = before / after
+p2 = before / after
 
 p = p+ plot_annotation(tag_levels = 'A')
 
@@ -196,22 +196,23 @@ names(keyvals.colour1)[keyvals.colour1 == 'red'] <- 'Up-regulated'
 names(keyvals.colour1)[keyvals.colour1 == 'blue'] <- 'Down-regulated'
 
 
-p1 <- EnhancedVolcano(tT,
-                      lab = NA,
-                      x = 'logFC',
-                      y = 'adj.P.Val',
-                      xlim = c(-1.5,1.5),
-                      title = NULL,  
-                      subtitle = NULL, 
-                      caption = NULL,
-                      pCutoff = adjPVal_cutoff,
-                      FCcutoff = logFC_cutoff,
-                      pointSize = c(ifelse(tT$adj.P.Val < adjPVal_cutoff & abs(tT$logFC) > logFC_cutoff, 4, 2)),
-                      colCustom = keyvals.colour1,
-                      legendLabSize = 8,
-                      legendIconSize = 4,
-                      axisLabSize = 10,
-                      legendPosition = 'bottom')
+p2 <-  EnhancedVolcano(tT,
+                       lab = NA,
+                       x = 'logFC',
+                       y = 'adj.P.Val',
+                       xlim = c(-1.5,1.5),
+                       title = NULL,  
+                       subtitle = NULL, 
+                       caption = NULL,
+                       pCutoff = adjPVal_cutoff,
+                       FCcutoff = logFC_cutoff,
+                       pointSize = c(ifelse(tT$adj.P.Val < adjPVal_cutoff & abs(tT$logFC) > logFC_cutoff, 4, 2)),
+                       colCustom = keyvals.colour1,
+                       legendLabSize = 12,
+                       legendIconSize = 8,
+                       axisLabSize = 14,
+                       legendPosition = 'bottom')
+
 
 
 

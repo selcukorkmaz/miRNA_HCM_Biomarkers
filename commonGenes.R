@@ -60,17 +60,17 @@ topgenes_gse32453 = left_join(topgenes_gse32453, annotation, by="ID")
 # Find up-regulated DEGs in top genes list and annotate them
 upDEGs_test = topgenes_gse32453[topgenes_gse32453$ID %in% annotation[annotation$ILMN_Gene %in% updegs[updegs$ID %in% upMiRNAtargets,"ID"],"ID"],]
 
-# Generate a list for Venn diagram comparison of DEGs and DE miRNA targets
+# Generate a list for Venn diagram comparison of DEGs and DE-miRNA Targets
 x = list(
   DEGs = upCommonDEGs,
-  "DE miRNA Targets" = upMiRNAtargets
+  "DE-miRNA Targets" = upMiRNAtargets
 )
 
 # Create a Venn diagram for up-regulated DEGs and miRNA targets
 p1 = ggvenn(
   x, 
   fill_color = c("#FF2C21", "#EFC000FF"),
-  stroke_size = 0.5, set_name_size = 4
+  stroke_size = 0.5, set_name_size = 6, text_size = 6
 )
 
 # Exclude a specific gene from down-regulated DEGs for further analysis
@@ -87,7 +87,7 @@ downDEGs_test$ILMN_Gene
 # Prepare a list for Venn diagram of down-regulated DEGs excluding a specific gene
 x = list(
   DEGs = downCommonDEGs[downCommonDEGs != "SERPINE1"],
-  "DE miRNA Targets" = downMiRNAtargets
+  "DE-miRNA Targets" = downMiRNAtargets
 )
 
 # Identify overlaps between down-regulated DEGs and miRNA targets, excluding a specific gene
@@ -97,15 +97,15 @@ downCommonDEGs[downCommonDEGs != "SERPINE1"][downCommonDEGs[downCommonDEGs != "S
 p2 = ggvenn(
   x, 
   fill_color = c("#0073C2FF", "#EFC000FF"),
-  stroke_size = 0.5, set_name_size = 4
+  stroke_size = 0.5, set_name_size = 6, text_size = 6
 )
 
 # Combine both Venn diagrams for up and down-regulated genes and targets
 p = p1 + p2
-p = p + plot_annotation(tag_levels = 'A')
+p = p + plot_annotation(tag_levels = 'A') & theme(plot.tag = element_text(size = '18'))
 
 # Save the combined Venn diagram plot to a file
-ggsave('~/Documents/Studies/LVH_DeepLearning/Figures/venn.png', p, width = 12, height = 8)
+ggsave('~/Documents/Studies/LVH_DeepLearning/JMCC/Figures/Figure4.png', p, width = 12, height = 8)
 
 
 ###### Part 2: Expression patterns in GSE32453 of common miRNAs with targets from the DEGs #####
@@ -188,7 +188,7 @@ p2 = myplot + stat_pvalue_manual(stat.test, label = "p")
 
 # Combine plots for both upregulated and downregulated DEGs
 p = p1 + p2
-p = p + plot_annotation(tag_levels = 'A')
+p = p + plot_annotation(tag_levels = 'A') & theme(plot.tag = element_text(size = '18'))
 
 # Save the combined plot to a file
 ggsave('~/Documents/Studies/LVH_DeepLearning/Figures/clinical_validation.png', p, width = 14, height = 8)

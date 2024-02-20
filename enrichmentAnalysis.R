@@ -6,7 +6,7 @@ library(patchwork)
 library(ggplot2)
 
 # Set working directory to the location of the gene expression data files
-setwd("~/Documents/Studies/LVH_DeepLearning/TopGenes/")
+# setwd("~/Documents/Studies/LVH_DeepLearning/TopGenes/")
 
 # Read DEG data for GSE36961
 degs_gse36961_data <- read.table("data/DEGs_GSE36961.txt", header = TRUE, sep = "\t")
@@ -66,8 +66,9 @@ go_mf <- enrichGO(gene = entrez_ids,
 p4 = dotplot(go_mf)
 
 # Combine and display all dot plots with annotations
-p = (p2 + p3 + p4 + p1) + plot_annotation(tag_levels = 'A')
+p = (p2 + p3 + p4 + p1) + plot_annotation(tag_levels = 'A') & theme(plot.tag = element_text(size = '18'))
+
 # Save the combined plot to a file
-ggsave('~/Documents/Studies/LVH_DeepLearning/Figures/GSE36961_kegg.png', p, width = 12, height = 8)
+ggsave('~/Documents/Studies/LVH_DeepLearning/JMCC/Figures/Figure3.png', p, width = 12, height = 8)
 
 
